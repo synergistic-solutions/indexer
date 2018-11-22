@@ -1,1 +1,1 @@
-from indexer import index
+from indexer.index import Indexer
