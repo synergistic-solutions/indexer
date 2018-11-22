@@ -21,8 +21,7 @@ class Indexer:
                     results[url] += value
                 else:
                     results[url] = value
-                    
-        print(results)
+
         return sorted(results.keys(), key=lambda key: results[key], reverse=True)
 
     def index(self, url, text):
