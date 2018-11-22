@@ -1,6 +1,7 @@
 import re
 import string
 
+
 class Indexer:
     hash_table = {}
 
@@ -8,7 +9,6 @@ class Indexer:
         tokens = re.split("[" + string.punctuation + string.whitespace + "]+", text)
         tokens = [token.lower() for token in tokens if token]
         return tokens
-
 
     def search(self, text):
         results = {}
@@ -24,7 +24,6 @@ class Indexer:
                     
         print(results)
         return sorted(results.keys(), key=lambda key: results[key], reverse=True)
-
 
     def index(self, url, text):
         tokens = self.tokenize(text)
