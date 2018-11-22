@@ -1,31 +1,37 @@
-hash_table = {}
+import re
+import string
+
+class Indexer:
+    hash_table = {}
+
+    def tokenize(self, text):
+        tokens = re.split("[" + string.punctuation + string.whitespace + "]+", text)
+        tokens = [token.lower() for token in tokens if token]
+        return tokens
 
 
-def tokenize(text):
-    tokens = text.split(' ')
-    return tokens
+    def search(self, text):
+        results = {}
 
-
-def search(text):
-    results = {}
-
-    for token in tokenize(text):
-        urls = hash_table.get(token, None)
-        if urls:
-            for url in urls:
+        for token in self.tokenize(text):
+            urls = self.hash_table.get(token, {})
+            # results = {**results, **urls}
+            for url, value in urls.items():
                 if url in results:
-                    results[url] += 1
+                    results[url] += value
                 else:
-                    results[url] = 1
+                    results[url] = value
+                    
+        print(results)
+        return sorted(results.keys(), key=lambda key: results[key], reverse=True)
 
-    return sorted(results.keys(), key=lambda key: results[key], reverse=True)
 
+    def index(self, url, text):
+        tokens = self.tokenize(text)
+        token_counts = {token:tokens.count(token) for token in tokens}
 
-def index(url, text):
-    for token in tokenize(text):
-
-        # checking if not in the hash table then creating an empty list requires another look up in hash table
-        if token in hash_table:
-            hash_table[token].append(url)
-        else:
-            hash_table[token] = [url]
+        for token, count in token_counts.items():
+            if token in self.hash_table:
+                self.hash_table[token][url] = count/len(tokens)
+            else:
+                self.hash_table[token] = {url: count/len(tokens)}
