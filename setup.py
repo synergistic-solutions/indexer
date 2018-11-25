@@ -1,7 +1,8 @@
 import setuptools
 
 setuptools.setup(
-    name="indexer",
+    name="synergistic.indexer",
     description="Site indexer",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_namespace_packages(),
+    namespace_packages=['synergistic']
 )
