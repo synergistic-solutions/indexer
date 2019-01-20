@@ -5,7 +5,8 @@ import string
 class Indexer:
     hash_table = {}
 
-    def tokenize(self, text):
+    @staticmethod
+    def tokenize(text):
         tokens = re.split("[" + string.punctuation + string.whitespace + "]+", text)
         tokens = [token.lower() for token in tokens if token]
         return tokens
